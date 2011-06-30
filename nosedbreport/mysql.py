@@ -33,7 +33,21 @@ class NoseMySQLReporter(NoseDBReportBase):
     
     def __init__(self):
         NoseDBReportBase.__init__(self)
-        
+    
+    
+    def execute_query(self, query, args):
+        # santize quotes.
+        for k,v in args.items():
+            if type(v) == type("string"):
+                args[k] = v.replace("'","\\'")
+        try:
+            cursor = self.connection.cursor()
+            ret = cursor.execute( query % args )
+            self.connection.commit()
+        except Exception, e:
+            ret = 0
+        return ret
+    
     def configure(self, options, conf):
         import MySQLdb
         try:
@@ -45,7 +59,6 @@ class NoseMySQLReporter(NoseDBReportBase):
                                               connect_timeout=5
                                               )
         except Exception, e:
-            print "not connected", str(e)
             self.enabled = False
 
     def report(self, stream):
@@ -55,9 +68,8 @@ class NoseMySQLReporter(NoseDBReportBase):
                 suite_update = { "suite" : suite,
                                 "lastCompleted" : self.test_suites[suite]["lastCompleted"]
                                 }
-                if self.connection:
-                    cursor = self.connection.cursor()
-                    cursor.execute(self.suite_complete_query % suite_update )
+                self.execute_query(self.suite_complete_query, suite_update)
+
             for case in results:
                 case_update = { "identifier":case,
                                 "name":results[case]["name"],
@@ -78,14 +90,8 @@ class NoseMySQLReporter(NoseDBReportBase):
                                 "status":results[case]["status"],
                                 "traceback":results[case]["traceback"]
                                 }
-                if self.connection:
-                    cursor = self.connection.cursor()
-                    try:
-                        cursor.execute(self.case_complete_query, case_update)
-                        cursor.execute(self.run_insert_query, run_update)
-                        self.connection.commit()
-                    except Exception, e:
-                        print e
+                self.execute_query(self.case_complete_query, case_update)
+                self.execute_query(self.run_insert_query, run_update)
   
     def startTest(self, test):
         if self.connection:
@@ -102,16 +108,9 @@ class NoseMySQLReporter(NoseDBReportBase):
                             "lastStarted":NoseDBReportBase.time_now()
                             }
         
-            cursor = self.connection.cursor()
-            try:
-                print self.suite_start_query % suite_update
-                print self.case_start_query % case_update
-                cursor.execute(self.suite_start_query, suite_update)
-                cursor.execute(self.case_start_query, case_update)
-                self.connection.commit()
+            self.execute_query(self.suite_start_query, suite_update)
+            self.execute_query(self.case_start_query, case_update)
 
-            except Exception, e:
-                print "start",str(e)
             
             
         super(NoseMySQLReporter, self).startTest(test)
