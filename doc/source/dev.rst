@@ -21,6 +21,10 @@ To add a new database connector, you will need to:
                 }
  * this will make the newconnector available with the command line option --dbreport_dbtype=newconnector
 
+Class Structure
+---------------
+.. inheritance-diagram:: nosedbreport.plugin nosedbreport.base nosedbreport.mysql
+
 Source Documentation
 --------------------
 .. automodule :: nosedbreport.plugin
@@ -29,5 +33,4 @@ Source Documentation
     :members:
 .. automodule :: nosedbreport.mysql
     :members:
-
 
