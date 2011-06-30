@@ -1,5 +1,5 @@
 """                                                                                                                                                                                                         
-setup.py for nosedbresult
+setup.py for nosedbreport
  
  
 """
@@ -13,8 +13,8 @@ setup(
     version='0.1',
     entry_points = {
         'nose.plugins.0.10': [
-            'nosedbresult = nosedbresult:NoseDBResult']
+            'nosedbreport = nosedbreport:NoseDBReporter']
         },
-    packages = ['nosedbresult'],
+    packages = ['nosedbreport'],
 )
 
