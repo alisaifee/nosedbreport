@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 
 
 
-class NoseDBResultBase(Plugin):
+class NoseDBReportBase(Plugin):
     """
     Base class for Nose plugins that stash test results
     into a database.
@@ -30,7 +30,7 @@ class NoseDBResultBase(Plugin):
 
     @staticmethod
     def time_now():
-        return datetime.now().strftime(NoseDBResultBase.time_fmt)
+        return datetime.now().strftime(NoseDBReportBase.time_fmt)
 
     def get_full_doc(self, test):
         full_doc = ""
@@ -62,7 +62,7 @@ class NoseDBResultBase(Plugin):
                                            "name":case,
                                            "description":description,
                                            "status":"skipped",
-                                           "lastStarted":NoseDBResultBase.time_now(),
+                                           "lastStarted":NoseDBReportBase.time_now(),
                                            "traceback":""
                                            }
         self.test_suites.setdefault(suite, {})
@@ -81,7 +81,7 @@ class NoseDBResultBase(Plugin):
                 self.test_case_results[id]["traceback"] = tb
                 self.test_case_results[id]["timeTaken"] = taken
                 self.test_case_results[id]["status"] = "error"
-                self.test_suites[suite]["lastCompleted"] = NoseDBResultBase.time_now()
+                self.test_suites[suite]["lastCompleted"] = NoseDBReportBase.time_now()
 
     
     def addFailure(self, test, err, capt=None, tb_info=None):
@@ -95,7 +95,7 @@ class NoseDBResultBase(Plugin):
             self.test_case_results[id]["traceback"] = tb
             self.test_case_results[id]["timeTaken"] = taken
             self.test_case_results[id]["status"] = "fail"      
-            self.test_suites[suite]["lastCompleted"] = NoseDBResultBase.time_now()
+            self.test_suites[suite]["lastCompleted"] = NoseDBReportBase.time_now()
         
     def addSuccess(self, test, capt=None):
         """Add success output to sql report.
@@ -105,6 +105,6 @@ class NoseDBResultBase(Plugin):
         id = test.id()
         self.test_case_results[id]["status"] = "success"
         self.test_case_results[id]["timeTaken"] = taken
-        self.test_suites[suite]["lastCompleted"] = NoseDBResultBase.time_now()
+        self.test_suites[suite]["lastCompleted"] = NoseDBReportBase.time_now()
         
 

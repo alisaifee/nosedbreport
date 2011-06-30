@@ -3,9 +3,9 @@
 
 import optparse
 from datetime import datetime, timedelta
-from base import NoseDBResultBase
+from base import NoseDBReportBase
 
-class NoseMySQLResult(NoseDBResultBase):
+class NoseMySQLReport(NoseDBReportBase):
     """
     """
                                     
@@ -32,16 +32,16 @@ class NoseMySQLResult(NoseDBResultBase):
     
     
     def __init__(self):
-        NoseDBResultBase.__init__(self)
+        NoseDBReportBase.__init__(self)
         
     def configure(self, options, conf):
         import MySQLdb
         try:
             self.connection = MySQLdb.connect(
-                                              options.dbresult_host, 
-                                              options.dbresult_username, 
-                                              options.dbresult_password, 
-                                              options.dbresult_db, 
+                                              options.dbreport_host, 
+                                              options.dbreport_username, 
+                                              options.dbreport_password, 
+                                              options.dbreport_db, 
                                               connect_timeout=5
                                               )
         except Exception, e:
@@ -96,10 +96,10 @@ class NoseMySQLResult(NoseDBResultBase):
                            "name":case,
                            "description":description,
                            "suite":suite,
-                           "lastStarted":NoseDBResultBase.time_now()
+                           "lastStarted":NoseDBReportBase.time_now()
                            }
             suite_update = { "suite":suite,
-                            "lastStarted":NoseDBResultBase.time_now()
+                            "lastStarted":NoseDBReportBase.time_now()
                             }
         
             cursor = self.connection.cursor()
@@ -114,7 +114,7 @@ class NoseMySQLResult(NoseDBResultBase):
                 print "start",str(e)
             
             
-        super(NoseMySQLResult, self).startTest(test)
+        super(NoseMySQLReport, self).startTest(test)
         
         
     def construct_schema(self):

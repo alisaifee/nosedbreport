@@ -1,10 +1,9 @@
 from nose.plugins.base import Plugin
-from base import NoseDBResultBase
 import mysql
 
 
 
-class NoseDBResult(Plugin):
+class Nosedbreport(Plugin):
     """
     """
     factory = {
@@ -19,13 +18,13 @@ class NoseDBResult(Plugin):
     def options(self, parser, env):
         """Register commandline options
         """
-        parser.add_option("", "--dbresult_dbtype", dest="db_type", type="choice", choices=["mysql"])
-        parser.add_option("", "--dbresult_host", default="localhost", dest="dbresult_host")
-        parser.add_option("", "--dbresult_port", dest="dbresult_port")
-        parser.add_option("", "--dbresult_username", default="nose", dest="dbresult_username")
-        parser.add_option("", "--dbresult_password", default="", dest="dbresult_password")
-        parser.add_option("", "--dbresult_db", default="noseresults", dest="dbresult_db")
-        parser.add_option("", "--dbresult_create_schema", action="store_true", dest="dbresult_create_schema")
+        parser.add_option("", "--dbreport_dbtype", dest="db_type", type="choice", choices=["mysql"])
+        parser.add_option("", "--dbreport_host", default="localhost", dest="dbreport_host")
+        parser.add_option("", "--dbreport_port", dest="dbreport_port")
+        parser.add_option("", "--dbreport_username", default="nose", dest="dbreport_username")
+        parser.add_option("", "--dbreport_password", default="", dest="dbreport_password")
+        parser.add_option("", "--dbreport_db", default="noseresults", dest="dbreport_db")
+        parser.add_option("", "--dbreport_create_schema", action="store_true", dest="dbreport_create_schema")
     def __become(self, other):
         self._other = other()
     
@@ -37,7 +36,7 @@ class NoseDBResult(Plugin):
             if self.enabled:
                 self.__become(self.factory[options.db_type])
                 self._other.configure(options, conf)
-                if options.dbresult_create_schema:
+                if options.dbreport_create_schema:
                     self._other.construct_schema()
 
     def __getattr__(self, attr):
