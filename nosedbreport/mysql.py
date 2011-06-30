@@ -5,7 +5,7 @@ import optparse
 from datetime import datetime, timedelta
 from base import NoseDBReportBase
 
-class NoseMySQLReport(NoseDBReportBase):
+class NoseMySQLReporter(NoseDBReportBase):
     """
     """
                                     
@@ -114,7 +114,7 @@ class NoseMySQLReport(NoseDBReportBase):
                 print "start",str(e)
             
             
-        super(NoseMySQLReport, self).startTest(test)
+        super(NoseMySQLReporter, self).startTest(test)
         
         
     def construct_schema(self):

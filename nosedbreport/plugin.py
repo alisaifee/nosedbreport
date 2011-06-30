@@ -3,11 +3,11 @@ import mysql
 
 
 
-class Nosedbreport(Plugin):
+class NoseDBReporter(Plugin):
     """
     """
     factory = {
-        "mysql":mysql.NoseMySQLResult
+        "mysql":mysql.NoseMySQLReporter
         }
     
     def __init__(self):
