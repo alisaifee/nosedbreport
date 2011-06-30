@@ -3,10 +3,12 @@
 
 import optparse
 from datetime import datetime, timedelta
-from base import NoseDBReportBase
+from base import NoseDBReporterBase
 
-class NoseMySQLReporter(NoseDBReportBase):
+class NoseMySQLReporter(NoseDBReporterBase):
     """
+    MySQL Connector. Reports the results of each test run into the tables
+    *testcase*, *testsuite* and *testcaseexecution*
     """
                                     
     run_insert_query = """
@@ -32,7 +34,7 @@ class NoseMySQLReporter(NoseDBReportBase):
     
     
     def __init__(self):
-        NoseDBReportBase.__init__(self)
+        NoseDBReporterBase.__init__(self)
     
     
     def execute_query(self, query, args):
@@ -62,6 +64,10 @@ class NoseMySQLReporter(NoseDBReportBase):
             self.enabled = False
 
     def report(self, stream):
+        """
+        After successful completion of a nose run, perform the final reporting
+        of the test results to the MySQL database.
+        """
         if self.connection:
             results = self.test_case_results
             for suite in self.test_suites:
@@ -94,6 +100,10 @@ class NoseMySQLReporter(NoseDBReportBase):
                 self.execute_query(self.run_insert_query, run_update)
   
     def startTest(self, test):
+        """
+        record initiation of a test case. Update the last start time 
+        of the test suite &  test case.
+        """
         if self.connection:
             description = self.get_full_doc(test)
             test_id = test.id()

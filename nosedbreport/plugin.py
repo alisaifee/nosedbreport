@@ -5,8 +5,10 @@ import mysql
 
 class NoseDBReporter(Plugin):
     """
+    The main plugin that is loaded by :class:`nose.plugin.PluginManager`
     """
-    factory = {
+    
+    connectors = {
         "mysql":mysql.NoseMySQLReporter
         }
     
@@ -18,7 +20,7 @@ class NoseDBReporter(Plugin):
     def options(self, parser, env):
         """Register commandline options
         """
-        parser.add_option("", "--dbreport_dbtype", dest="db_type", type="choice", choices=["mysql"])
+        parser.add_option("", "--dbreport_dbtype", dest="db_type", type="choice", choices=self.connector.keys())
         parser.add_option("", "--dbreport_host", default="localhost", dest="dbreport_host")
         parser.add_option("", "--dbreport_port", dest="dbreport_port")
         parser.add_option("", "--dbreport_username", default="nose", dest="dbreport_username")
@@ -34,7 +36,7 @@ class NoseDBReporter(Plugin):
         if options.db_type:
             self.enabled = options.db_type != None
             if self.enabled:
-                self.__become(self.factory[options.db_type])
+                self.__become(self.connectors[options.db_type])
                 self._other.configure(options, conf)
                 if options.dbreport_create_schema:
                     self._other.construct_schema()

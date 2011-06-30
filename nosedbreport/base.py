@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 
 
 
-class NoseDBReportBase(Plugin):
+class NoseDBReporterBase(Plugin):
     """
     Base class for Nose plugins that stash test results
     into a database.
@@ -50,7 +50,10 @@ class NoseDBReportBase(Plugin):
  
   
     def startTest(self, test):
-        """Initializes a timer before starting a test."""
+        """
+        collect information about a test before it begins,
+        and initialize a timer to record time taken.
+        """
         self._timer = time()
         description = self.get_full_doc(test)
         test_id = test.id()
@@ -69,6 +72,10 @@ class NoseDBReportBase(Plugin):
         
     
     def addError(self, test, err, capt=None):
+        """
+        sets the status of the test to either 'skipped' or 'error',
+        collects the trace and time taken to execute.
+        """
         file_path, suite, case = test.address()
         if issubclass(err[0], SkipTest):
             self.test_case_results[id]["status"] = "skipped"
@@ -85,7 +92,9 @@ class NoseDBReportBase(Plugin):
 
     
     def addFailure(self, test, err, capt=None, tb_info=None):
-        """Add failure output to sql report.
+        """
+        sets the status of the test to 'fail',
+        collects the trace and time taken to execute.
         """
         file_path, suite, case = test.address()
         taken = time() - self._timer
@@ -98,7 +107,9 @@ class NoseDBReportBase(Plugin):
             self.test_suites[suite]["lastCompleted"] = NoseDBReportBase.time_now()
         
     def addSuccess(self, test, capt=None):
-        """Add success output to sql report.
+        """
+        sets the status of the test to 'pass',
+        and sets the time taken to execute.
         """
         file_path, suite, case = test.address()
         taken = time() - self._timer
