@@ -7,7 +7,8 @@ class NoseDBReporter(Plugin):
     """
     The main plugin that is loaded by :class:`nose.plugin.PluginManager`
     """
-    
+    #: list of db connectors available for use
+    #: when specifying db_type.
     connectors = {
         "mysql":mysql.NoseMySQLReporter
         }

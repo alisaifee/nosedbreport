@@ -10,7 +10,7 @@ Currently, the plugin is only backed by a MySQL connector, but it can be easily 
 To add a new database connector, you will need to:
  
  * add a new class that extends :class:`nosedbreport.base.NoseDBReporterBase`
- * implement the :meth:`configure`, :meth:`startTest` and :meth:`report` methods. (For an example see the MySQL implementation in
+ * implement the :meth:`configure`, :meth:`startTest`, :meth:`report`  and :meth:`construct_schema` methods. (For an example see the MySQL implementation in
    :class:`nosedbreport.mysql.NoseMySQLReporter`)
  * add your new class to the :attr:`nosedbreport.plugin.NoseDBReporter.connectors` in :mod:`nosedbreport.plugin` in the following way::
    

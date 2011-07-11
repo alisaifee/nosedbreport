@@ -37,7 +37,11 @@ class NoseMySQLReporter(NoseDBReporterBase):
         NoseDBReporterBase.__init__(self)
     
     
-    def execute_query(self, query, args):
+    def __execute_query(self, query, args):
+        """
+        helper method to execute a MySQL query and commit
+        the result.
+        """
         # santize quotes.
         for k,v in args.items():
             if type(v) == type("string"):
@@ -51,6 +55,9 @@ class NoseMySQLReporter(NoseDBReporterBase):
         return ret
     
     def configure(self, options, conf):
+        """
+        sets up the MySQL database connection
+        """
         import MySQLdb
         try:
             self.connection = MySQLdb.connect(
@@ -74,7 +81,7 @@ class NoseMySQLReporter(NoseDBReporterBase):
                 suite_update = { "suite" : suite,
                                 "lastCompleted" : self.test_suites[suite]["lastCompleted"]
                                 }
-                self.execute_query(self.suite_complete_query, suite_update)
+                self.__execute_query(self.suite_complete_query, suite_update)
 
             for case in results:
                 case_update = { "identifier":case,
@@ -96,8 +103,8 @@ class NoseMySQLReporter(NoseDBReporterBase):
                                 "status":results[case]["status"],
                                 "traceback":results[case]["traceback"]
                                 }
-                self.execute_query(self.case_complete_query, case_update)
-                self.execute_query(self.run_insert_query, run_update)
+                self.__execute_query(self.case_complete_query, case_update)
+                self.__execute_query(self.run_insert_query, run_update)
   
     def startTest(self, test):
         """
@@ -118,8 +125,8 @@ class NoseMySQLReporter(NoseDBReporterBase):
                             "lastStarted":NoseDBReportBase.time_now()
                             }
         
-            self.execute_query(self.suite_start_query, suite_update)
-            self.execute_query(self.case_start_query, case_update)
+            self.__execute_query(self.suite_start_query, suite_update)
+            self.__execute_query(self.case_start_query, case_update)
 
             
             
@@ -127,6 +134,10 @@ class NoseMySQLReporter(NoseDBReporterBase):
         
         
     def construct_schema(self):
+        """
+        called when the `--dbreport_create_schema` command option 
+        is passed to the plugin to create the mysql table schema.
+        """
         testcase_schema = """ CREATE TABLE `testcase` (
       `identifier` varchar(255) NOT NULL,
       `name` varchar(255) NOT NULL,
