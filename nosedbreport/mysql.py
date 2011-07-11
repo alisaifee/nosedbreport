@@ -119,10 +119,10 @@ class NoseMySQLReporter(NoseDBReporterBase):
                            "name":case,
                            "description":description,
                            "suite":suite,
-                           "lastStarted":NoseDBReportBase.time_now()
+                           "lastStarted":NoseDBReporterBase.time_now()
                            }
             suite_update = { "suite":suite,
-                            "lastStarted":NoseDBReportBase.time_now()
+                            "lastStarted":NoseDBReporterBase.time_now()
                             }
         
             self.__execute_query(self.suite_start_query, suite_update)

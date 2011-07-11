@@ -30,7 +30,7 @@ class NoseDBReporterBase(Plugin):
 
     @staticmethod
     def time_now():
-        return datetime.now().strftime(NoseDBReportBase.time_fmt)
+        return datetime.now().strftime(NoseDBReporterBase.time_fmt)
 
     def get_full_doc(self, test):
         full_doc = ""
@@ -65,7 +65,7 @@ class NoseDBReporterBase(Plugin):
                                            "name":case,
                                            "description":description,
                                            "status":"skipped",
-                                           "lastStarted":NoseDBReportBase.time_now(),
+                                           "lastStarted":NoseDBReporterBase.time_now(),
                                            "traceback":""
                                            }
         self.test_suites.setdefault(suite, {})
@@ -88,7 +88,7 @@ class NoseDBReporterBase(Plugin):
                 self.test_case_results[id]["traceback"] = tb
                 self.test_case_results[id]["timeTaken"] = taken
                 self.test_case_results[id]["status"] = "error"
-                self.test_suites[suite]["lastCompleted"] = NoseDBReportBase.time_now()
+                self.test_suites[suite]["lastCompleted"] = NoseDBReporterBase.time_now()
 
     
     def addFailure(self, test, err, capt=None, tb_info=None):
@@ -104,7 +104,7 @@ class NoseDBReporterBase(Plugin):
             self.test_case_results[id]["traceback"] = tb
             self.test_case_results[id]["timeTaken"] = taken
             self.test_case_results[id]["status"] = "fail"      
-            self.test_suites[suite]["lastCompleted"] = NoseDBReportBase.time_now()
+            self.test_suites[suite]["lastCompleted"] = NoseDBReporterBase.time_now()
         
     def addSuccess(self, test, capt=None):
         """
@@ -116,6 +116,6 @@ class NoseDBReporterBase(Plugin):
         id = test.id()
         self.test_case_results[id]["status"] = "success"
         self.test_case_results[id]["timeTaken"] = taken
-        self.test_suites[suite]["lastCompleted"] = NoseDBReportBase.time_now()
+        self.test_suites[suite]["lastCompleted"] = NoseDBReporterBase.time_now()
         
 
