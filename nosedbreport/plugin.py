@@ -25,7 +25,7 @@ class NoseDBReporter(Plugin):
         parser.add_option("", "--dbreport_port", dest="dbreport_port")
         parser.add_option("", "--dbreport_username", default="nose", dest="dbreport_username")
         parser.add_option("", "--dbreport_password", default="", dest="dbreport_password")
-        parser.add_option("", "--dbreport_db", default="noseresults", dest="dbreport_db")
+        parser.add_option("", "--dbreport_db", default="nosereport", dest="dbreport_db")
         parser.add_option("", "--dbreport_create_schema", action="store_true", dest="dbreport_create_schema")
     
     def __become(self, other):

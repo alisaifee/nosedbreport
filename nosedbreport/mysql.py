@@ -18,7 +18,7 @@ class NoseMySQLReporter(NoseDBReporterBase):
     values ('%(testcase)s', '%(startTime)s', '%(timeTaken)s', '%(status)s', '%(traceback)s');
     """
     case_start_query = """
-    insert into testcase values('%(identifier)s', '%(name)s', '%(description)s', '%(suite)s', '%(lastStarted)s', 0)
+    insert into testcase values('%(id)s', '%(name)s', '%(description)s', '%(suite)s', '%(lastStarted)s', 0)
     on duplicate key update lastStarted='%(lastStarted)s', description='%(description)s';
     """
     suite_start_query = """
@@ -48,13 +48,16 @@ class NoseMySQLReporter(NoseDBReporterBase):
         for k,v in args.items():
             if type(v) == type("string"):
                 args[k] = v.replace("'","\\'")
+        ret = 0
         try:
+            import MySQLdb
             cursor = self.connection.cursor()
             ret = cursor.execute( query % args )
             self.connection.commit()
+        except MySQLdb.ProgrammingError, e:
+            self.logger.error ( "failed to execute query with error: %s" % str(e[1]))
         except Exception, e:
-            self.logger.debug ( "failed to execute query with error: %s" % str(e))
-            ret = 0
+            self.logger.error ("unknown error executing query: %s" % str(e))
         return ret
     
     def configure(self, options, conf):
@@ -91,7 +94,7 @@ class NoseMySQLReporter(NoseDBReporterBase):
                 self.__execute_query(self.suite_complete_query, suite_update)
 
             for case in results:
-                case_update = { "identifier":case,
+                case_update = { "id":case,
                                 "name":results[case]["name"],
                                 "description":results[case]["description"],
                                 "suite":results[case]["suite"],
@@ -122,7 +125,7 @@ class NoseMySQLReporter(NoseDBReporterBase):
             description = self.get_full_doc(test)
             test_id = test.id()
             file_path, suite, case = test.address()
-            case_update = { "identifier":test_id,
+            case_update = { "id":test_id,
                            "name":case,
                            "description":description,
                            "suite":suite,
@@ -145,42 +148,44 @@ class NoseMySQLReporter(NoseDBReporterBase):
         called when the `--dbreport_create_schema` command option 
         is passed to the plugin to create the mysql table schema.
         """
-        testcase_schema = """ CREATE TABLE `testcase` (
-      `identifier` varchar(255) NOT NULL,
-      `name` varchar(255) NOT NULL,
-      `description` varchar(255) NOT NULL,
-      `suite` varchar(255) NOT NULL,
-      `lastStarted` datetime DEFAULT NULL,
-      `lastCompleted` datetime DEFAULT NULL,
-      PRIMARY KEY (`identifier`),
-      KEY `idx_identifier` (`identifier`),
-      KEY `idx_name` (`name`),
-      KEY `idx_suite` (`suite`),
-      CONSTRAINT `fk_suite` FOREIGN KEY (`suite`) REFERENCES `testsuite` (`name`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=latin1
-    """
-        testsuite_schema = """CREATE TABLE `testsuite` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `name` varchar(255) NOT NULL,
-      `lastStarted` datetime DEFAULT NULL,
-      `lastCompleted` datetime DEFAULT NULL,
-      PRIMARY KEY (`id`),
-      UNIQUE KEY `idx_name` (`name`) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
-    """
-        testcaseexecution_schema = """CREATE TABLE `testcaseexecution` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `testcase` varchar(255) NOT NULL,
-      `startTime` datetime NOT NULL,
-      `timeTaken` float NOT NULL,
-      `status` enum('success','fail','error','skipped','') NOT NULL,
-      `traceback` text NOT NULL,
-      PRIMARY KEY (`id`),
-      KEY `idx_status` (`status`),
-      KEY `idx_testcase` (`testcase`) USING BTREE,
-      CONSTRAINT `fk_testcase_identifier` FOREIGN KEY (`testcase`) REFERENCES `testcase` (`identifier`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
-    """ 
+        testcase_schema = """ 
+        CREATE TABLE `testcase` (
+          `id` varchar(255) NOT NULL,
+          `name` varchar(255) NOT NULL,
+          `description` varchar(255) NOT NULL,
+          `suite` varchar(255) NOT NULL,
+          `lastStarted` datetime DEFAULT NULL,
+          `lastCompleted` datetime DEFAULT NULL,
+          PRIMARY KEY (`id`),
+          KEY `idx_name` (`name`),
+          KEY `idx_suite` (`suite`),
+          CONSTRAINT `fk_suite_name` FOREIGN KEY (`suite`) REFERENCES `testsuite` (`name`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+        """
+        testsuite_schema = """
+        CREATE TABLE `testsuite` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `name` varchar(255) NOT NULL,
+          `lastStarted` datetime DEFAULT NULL,
+          `lastCompleted` datetime DEFAULT NULL,
+          PRIMARY KEY (`id`),
+          UNIQUE KEY `idx_name` (`name`) USING BTREE
+        ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+        """
+        testcaseexecution_schema = """
+        CREATE TABLE `testcaseexecution` (
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `testcase` varchar(255) NOT NULL,
+          `startTime` datetime NOT NULL,
+          `timeTaken` float NOT NULL,
+          `status` enum('success','fail','error','skipped','') NOT NULL,
+          `traceback` text NOT NULL,
+          PRIMARY KEY (`id`),
+          KEY `idx_status` (`status`),
+          KEY `idx_testcase` (`testcase`) USING BTREE,
+          CONSTRAINT `fk_testcase_id` FOREIGN KEY (`testcase`) REFERENCES `testcase` (`id`)
+        ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+        """ 
         cursor = self.connection.cursor()
         
         if not cursor.execute("show tables like 'test%%'") == 3:
