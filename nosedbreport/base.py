@@ -6,6 +6,7 @@ import pprint
 from time import time
 from datetime import datetime, timedelta
 from nose.plugins.base import Plugin
+from nose.plugins.skip import SkipTest
 
 class NoseDBReporterBase(Plugin):
     """
