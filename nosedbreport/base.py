@@ -6,25 +6,21 @@ import pprint
 from time import time
 from datetime import datetime, timedelta
 from nose.plugins.base import Plugin
-from nose.util import src, tolist
-from nose.exc import SkipTest
-
-log = logging.getLogger(__name__)
-
-
 
 class NoseDBReporterBase(Plugin):
     """
     Base class for Nose plugins that stash test results
     into a database.
     """
-
+    name = "nosedbreport"
     enabled = False
+
     def __init__(self):
         self.connection = None
         self.test_suites = {}
         self.test_case_results = {}
         self._timer = 0
+        self.logger = logging.getLogger("nose.plugins.nosedbreport")
 
     time_fmt = "%Y-%m-%d %H:%M:%S"
 

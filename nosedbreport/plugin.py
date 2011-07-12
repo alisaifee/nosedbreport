@@ -1,8 +1,6 @@
 from nose.plugins.base import Plugin
 import mysql
 
-
-
 class NoseDBReporter(Plugin):
     """
     The main plugin that is loaded by :class:`nose.plugin.PluginManager`
@@ -12,6 +10,7 @@ class NoseDBReporter(Plugin):
     connectors = {
         "mysql":mysql.NoseMySQLReporter
         }
+
     
     def __init__(self):
         Plugin.__init__(self)
@@ -45,7 +44,7 @@ class NoseDBReporter(Plugin):
                 self._other.configure(options, conf)
                 if options.dbreport_create_schema:
                     self._other.construct_schema()
-                    raise SystemExit("scheme generated.")
+                    raise SystemExit("schema generated.")
 
     
     def __getattr__(self, attr):

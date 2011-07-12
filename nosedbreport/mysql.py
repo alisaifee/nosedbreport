@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 from base import NoseDBReporterBase
 
 class NoseMySQLReporter(NoseDBReporterBase):
+    name = "nosedbreport"
+
     """
     MySQL Connector. Reports the results of each test run into the tables
     *testcase*, *testsuite* and *testcaseexecution*
@@ -51,6 +53,7 @@ class NoseMySQLReporter(NoseDBReporterBase):
             ret = cursor.execute( query % args )
             self.connection.commit()
         except Exception, e:
+            self.logger.debug ( "failed to execute query with error: %s" % str(e))
             ret = 0
         return ret
     
@@ -67,8 +70,12 @@ class NoseMySQLReporter(NoseDBReporterBase):
                                               options.dbreport_db, 
                                               connect_timeout=5
                                               )
-        except Exception, e:
+        except ImportError, e:
             self.enabled = False
+            self.logger.error ("The MySQLdb module is required for nosedbreporter to work with mysql")
+        except MySQLdb.OperationalError, e:
+            self.enabled = False
+            self.logger.error (e[1])
 
     def report(self, stream):
         """
