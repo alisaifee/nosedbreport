@@ -15,6 +15,12 @@ class NoseDBReporterBase(Plugin):
     """
     name = "nosedbreport"
     enabled = False
+    
+    time_fmt = "%Y-%m-%d %H:%M:%S"
+
+    @staticmethod
+    def time_now():
+        return datetime.now().strftime(NoseDBReporterBase.time_fmt)
 
     def __init__(self):
         self.connection = None
@@ -22,12 +28,9 @@ class NoseDBReporterBase(Plugin):
         self.test_case_results = {}
         self._timer = 0
         self.logger = logging.getLogger("nose.plugins.nosedbreport")
+        self.start_time = NoseDBReporterBase.time_now()
 
-    time_fmt = "%Y-%m-%d %H:%M:%S"
 
-    @staticmethod
-    def time_now():
-        return datetime.now().strftime(NoseDBReporterBase.time_fmt)
 
     def get_full_doc(self, test):
         full_doc = ""

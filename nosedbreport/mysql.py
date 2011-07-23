@@ -1,17 +1,14 @@
-"""
-"""
-
 import optparse
 from datetime import datetime, timedelta
 from base import NoseDBReporterBase
 
 class NoseMySQLReporter(NoseDBReporterBase):
-    name = "nosedbreport"
-
     """
     MySQL Connector. Reports the results of each test run into the tables
     *testcase*, *testsuite* and *testcaseexecution*
     """
+    name = "nosedbreport"
+
                                     
     run_insert_query = """
     insert into testcaseexecution (testcase, startTime, timeTaken, status, traceback)
@@ -29,6 +26,11 @@ class NoseMySQLReporter(NoseDBReporterBase):
     insert into testsuite (name, lastCompleted) values('%(suite)s', '%(lastCompleted)s')
     on duplicate key update lastCompleted='%(lastCompleted)s';
     """
+    suiteexecution_complete_query = """
+    insert into testsuiteexecution (suite, startTime, endTime)
+    values ('%(suite)s', '%(startTime)s', '%(lastCompleted)s');
+    """
+    
     case_complete_query = """
     update testcase set lastCompleted = '%(lastCompleted)s';
     """
@@ -89,9 +91,11 @@ class NoseMySQLReporter(NoseDBReporterBase):
             results = self.test_case_results
             for suite in self.test_suites:
                 suite_update = { "suite" : suite,
+                                "startTime" : self.start_time,
                                 "lastCompleted" : self.test_suites[suite]["lastCompleted"]
                                 }
                 self.__execute_query(self.suite_complete_query, suite_update)
+                self.__execute_query(self.suiteexecution_complete_query, suite_update)
 
             for case in results:
                 case_update = { "id":case,
@@ -186,11 +190,24 @@ class NoseMySQLReporter(NoseDBReporterBase):
           CONSTRAINT `fk_testcase_id` FOREIGN KEY (`testcase`) REFERENCES `testcase` (`id`)
         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
         """ 
+        
+        testsuiteexecution_schema = """
+        CREATE TABLE `testsuiteexecution` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `suite` varchar(255) NOT NULL,
+            `startTime` datetime NOT NULL,
+            `endTime` datetime NOT NULL,
+            PRIMARY KEY (`id`),
+            KEY `idx_start` (`startTime`),
+            KEY `idx_end` (`endTime`),
+            CONSTRAINT `fk_testsuite_name` FOREIGN KEY (`suite`) REFERENCES `testsuite` (`name`)
+        ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+        """ 
         cursor = self.connection.cursor()
         
-        if not cursor.execute("show tables like 'test%%'") == 3:
+        if not cursor.execute("show tables like 'test%%'") == 4:
             cursor.execute ( testsuite_schema )
             cursor.execute ( testcase_schema )
             cursor.execute ( testcaseexecution_schema )
-        
+            cursor.execute ( testsuiteexecution_schema )
 
