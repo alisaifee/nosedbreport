@@ -54,7 +54,6 @@ class NoseMySQLReporter(NoseDBReporterBase):
         try:
             import MySQLdb
             cursor = self.connection.cursor()
-            print query % args
             ret = cursor.execute( query % args )
             self.connection.commit()
         except MySQLdb.ProgrammingError, e:
@@ -97,8 +96,17 @@ class NoseMySQLReporter(NoseDBReporterBase):
                                 "lastCompleted" : self.test_suites[suite]["lastCompleted"]
                                 }
                 self.__execute_query(self.suite_complete_query, suite_update)
-                suiteexecids[suite] = self.__execute_query(self.suiteexecution_complete_query, suite_update)
+                self.__execute_query(self.suiteexecution_complete_query, suite_update)
 
+                # get the suiteexecution id now.
+                self.connection.query ("""
+                select id from testsuiteexecution where suite='%(suite)s' and
+                startTime='%(startTime)s' and 
+                endTime='%(lastCompleted)s' 
+                """ % suite_update)
+                result = self.connection.store_result()
+                suiteexecids[suite] = result.fetch_row()[0][0]
+                
             for case in results:
                 case_update = { "id":case,
                                 "name":results[case]["name"],
