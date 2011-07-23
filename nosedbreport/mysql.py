@@ -11,8 +11,8 @@ class NoseMySQLReporter(NoseDBReporterBase):
 
                                     
     run_insert_query = """
-    insert into testcaseexecution (testcase, startTime, timeTaken, status, traceback)
-    values ('%(testcase)s', '%(startTime)s', '%(timeTaken)s', '%(status)s', '%(traceback)s');
+    insert into testcaseexecution (testcase, startTime, timeTaken, status, traceback, suiteexecution)
+    values ('%(testcase)s', '%(startTime)s', '%(timeTaken)s', '%(status)s', '%(traceback)s', %(suiteexecution)d);
     """
     case_start_query = """
     insert into testcase values('%(id)s', '%(name)s', '%(description)s', '%(suite)s', '%(lastStarted)s', 0)
@@ -54,6 +54,7 @@ class NoseMySQLReporter(NoseDBReporterBase):
         try:
             import MySQLdb
             cursor = self.connection.cursor()
+            print query % args
             ret = cursor.execute( query % args )
             self.connection.commit()
         except MySQLdb.ProgrammingError, e:
@@ -89,13 +90,14 @@ class NoseMySQLReporter(NoseDBReporterBase):
         """
         if self.connection:
             results = self.test_case_results
+            suiteexecids={}
             for suite in self.test_suites:
                 suite_update = { "suite" : suite,
                                 "startTime" : self.start_time,
                                 "lastCompleted" : self.test_suites[suite]["lastCompleted"]
                                 }
                 self.__execute_query(self.suite_complete_query, suite_update)
-                self.__execute_query(self.suiteexecution_complete_query, suite_update)
+                suiteexecids[suite] = self.__execute_query(self.suiteexecution_complete_query, suite_update)
 
             for case in results:
                 case_update = { "id":case,
@@ -112,6 +114,7 @@ class NoseMySQLReporter(NoseDBReporterBase):
 
                 run_update = { "testcase":case,
                                 "suite":results[case]["suite"],
+                                "suiteexecution":suiteexecids[suite],
                                 "startTime":results[case]["lastStarted"],
                                 "timeTaken":results[case]["timeTaken"],
                                 "status":results[case]["status"],
@@ -180,6 +183,7 @@ class NoseMySQLReporter(NoseDBReporterBase):
         CREATE TABLE `testcaseexecution` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
           `testcase` varchar(255) NOT NULL,
+          `suiteexecution` int(11) NOT NULL,
           `startTime` datetime NOT NULL,
           `timeTaken` float NOT NULL,
           `status` enum('success','fail','error','skipped','') NOT NULL,
@@ -187,7 +191,9 @@ class NoseMySQLReporter(NoseDBReporterBase):
           PRIMARY KEY (`id`),
           KEY `idx_status` (`status`),
           KEY `idx_testcase` (`testcase`) USING BTREE,
-          CONSTRAINT `fk_testcase_id` FOREIGN KEY (`testcase`) REFERENCES `testcase` (`id`)
+          KEY `idx_suiteexecution` (`suiteexecution`),
+          CONSTRAINT `fk_testcase_id` FOREIGN KEY (`testcase`) REFERENCES `testcase` (`id`),
+          CONSTRAINT `fk_suiteexec_id` FOREIGN KEY (`suiteexecution`) REFERENCES `testsuiteexecution` (`id`)
         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
         """ 
         
@@ -208,6 +214,6 @@ class NoseMySQLReporter(NoseDBReporterBase):
         if not cursor.execute("show tables like 'test%%'") == 4:
             cursor.execute ( testsuite_schema )
             cursor.execute ( testcase_schema )
-            cursor.execute ( testcaseexecution_schema )
             cursor.execute ( testsuiteexecution_schema )
+            cursor.execute ( testcaseexecution_schema )
 
