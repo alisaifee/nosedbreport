@@ -2,6 +2,7 @@ import logging
 from nose.plugins.base import Plugin
 from base import NoseDBReporterBase
 import mysql
+import sqlite
 
 class NoseDBReporter(Plugin):
     """
@@ -11,7 +12,7 @@ class NoseDBReporter(Plugin):
     #: when specifying db_type.
     connectors = {
         "mysql":mysql.NoseMySQLReporter,
-        "lamedb" : object,
+        "sqlite" : sqlite.NoseSQLiteReporter,
         }
 
     

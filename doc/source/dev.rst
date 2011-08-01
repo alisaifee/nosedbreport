@@ -5,7 +5,7 @@ Contributing
 .. _bitbucket repository: http://hg.indydevs.org/nosedbreport
 
 The source is maintained in a `bitbucket repository`_. Feel free to fork it to modify/extend the plugin.
-Currently, the plugin is only backed by a MySQL connector, but it can be easily extended to support other databases.
+Currently, the plugin is only backed by a MySQL & SQLite connector, but it can be easily extended to support other databases.
 
 To add a new database connector, you will need to:
  
@@ -23,7 +23,7 @@ To add a new database connector, you will need to:
 
 Class Structure
 ---------------
-.. inheritance-diagram:: nosedbreport.plugin nosedbreport.base nosedbreport.mysql
+.. inheritance-diagram:: nosedbreport.plugin nosedbreport.base nosedbreport.mysql nosedbreport.sqlite
 
 
 Source Documentation
@@ -33,4 +33,6 @@ Source Documentation
 .. automodule :: nosedbreport.base
     :members:
 .. automodule :: nosedbreport.mysql
+    :members:
+.. automodule :: nosedbreport.sqlite
     :members:

@@ -1,10 +1,9 @@
 nosedbreport : save the smell
 -----------------------------
-.. literalinclude ../../README.rst
+.. include:: ../../README.rst
 
 .. toctree::
-   :maxdepth: 1
-   
-   ../../README    
+   :maxdepth: 3
+
    dev
 

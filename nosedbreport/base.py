@@ -33,6 +33,10 @@ class NoseDBReporterBase(Plugin):
 
 
     def get_full_doc(self, test):
+        """
+        via various nasty inspection methods, return the 
+        full docstring of the test being executed now.
+        """
         full_doc = ""
         try:
             func_doc = test.test._descriptors()[0].__doc__
