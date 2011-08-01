@@ -16,7 +16,7 @@ To add a new database connector, you will need to:
    
     import newconnector
     connectors = { 
-                  "newconnectorn" : newconnector.NoseNewConnectorReporter,
+                  "newconnector" : newconnector.NoseNewConnectorReporter,
                   "mysql" : mysql.NoseMySQLReporter 
                 }
  * this will make the newconnector available with the command line option --dbreport_dbtype=newconnector
@@ -24,6 +24,7 @@ To add a new database connector, you will need to:
 Class Structure
 ---------------
 .. inheritance-diagram:: nosedbreport.plugin nosedbreport.base nosedbreport.mysql
+
 
 Source Documentation
 --------------------
@@ -33,4 +34,3 @@ Source Documentation
     :members:
 .. automodule :: nosedbreport.mysql
     :members:
-
