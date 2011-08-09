@@ -8,6 +8,10 @@ from datetime import datetime, timedelta
 from nose.plugins.base import Plugin
 from nose.plugins.skip import SkipTest
 
+__author__ = "Ali-Akber Saifee"
+__email__ = "ali@mig33global.com"
+__copyright__ = "Copyright 2011, ProjectGoth"
+
 class NoseDBReporterBase(Plugin):
     """
     Base class for Nose plugins that stash test results
@@ -24,7 +28,10 @@ class NoseDBReporterBase(Plugin):
 
     def __init__(self):
         self.connection = None
+        #:dictionary to keep track of the overall suite results
         self.test_suites = {}
+        #:dictionary to keep track of individual test case
+        #:executions, including status, time taken and tracebacks.
         self.test_case_results = {}
         self._timer = 0
         self.logger = logging.getLogger("nose.plugins.nosedbreport")

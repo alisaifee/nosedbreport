@@ -2,6 +2,11 @@ import optparse
 from datetime import datetime, timedelta
 from base import NoseDBReporterBase
 
+__author__ = "Ali-Akber Saifee"
+__email__ = "ali@mig33global.com"
+__copyright__ = "Copyright 2011, ProjectGoth"
+
+
 class NoseMySQLReporter(NoseDBReporterBase):
     """
     MySQL Connector. Reports the results of each test run into the tables
