@@ -19,9 +19,11 @@ Installation
 * with easy_install ::
    
     sudo easy_install nosedbreport
+
 * with pip ::
     
     sudo pip install nosedbreport
+
 * from source ::
 
     hg clone http://hg.indydevs.org/ali/nosedbreport
