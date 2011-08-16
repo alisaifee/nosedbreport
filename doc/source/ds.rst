@@ -3,12 +3,12 @@ Data Structures
 
 Overview
 ========
-By extending :class:`nosedbreport.base.NoseDBReporterBase` you essentially have access to two relevant
-dictionaries, :attr:`nosedbreport.base.NoseDBReporterBase.test_suites` and :attr:`nodedbreport.base.NoseDBReporterBase.test_case_results`.
+By extending :class:`~nosedbreport.base.NoseDBReporterBase` you essentially have access to two relevant
+dictionaries, :attr:`~nosedbreport.base.NoseDBReporterBase.test_suites` and :attr:`~nosedbreport.base.NoseDBReporterBase.test_case_results`.
 
 MySQL Example
 =============
-The :class:`nosedbreport.mysql.NoseMySQLReporter` backend translates the data structures of the plugin into mysql tables using 4 tables:
+The :class:`~nosedbreport.mysql.NoseMySQLReporter` backend translates the data structures of the plugin into mysql tables using 4 tables:
 
 * testsuite
 * testsuiteexecution

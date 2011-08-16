@@ -10,7 +10,7 @@ __copyright__ = "Copyright 2011, ProjectGoth"
 class NoseMySQLReporter(NoseDBReporterBase):
     """
     MySQL Connector. Reports the results of each test run into the tables
-    *testcase*, *testsuite*, *testcaseexecution* and *testsuiteexecution*
+    ``testcase``, ``testsuite``, ``testcaseexecution`` and ``testsuiteexecution``
     """
     name = "nosedbreport"
 
@@ -50,6 +50,10 @@ class NoseMySQLReporter(NoseDBReporterBase):
         """
         helper method to execute a MySQL query and commit
         the result.
+        
+        :param query: the query to execute
+        :param args: variable arguments to use when formatting the query
+
         """
         # santize quotes.
         for k,v in args.items():

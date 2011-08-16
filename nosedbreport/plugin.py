@@ -46,6 +46,8 @@ class NoseDBReporter(Plugin):
         store a reference to a new NodeDBReporter object. Future
         invocations of methods on the plugin will be proxied to this
         object. Identity crisis!
+        
+        :param other:an object of type :class:`~nosedbreport.base.NoseDBReporterBase`
         """
         self._other = other()
     

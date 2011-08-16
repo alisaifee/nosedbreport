@@ -42,7 +42,7 @@ class NoseDBReporterBase(Plugin):
     def get_full_doc(self, test):
         """
         via various nasty inspection methods, return the 
-        full docstring of the test being executed now.
+        full docstring of the ``test`` being executed now.
         """
         full_doc = ""
         try:
@@ -62,7 +62,7 @@ class NoseDBReporterBase(Plugin):
   
     def startTest(self, test):
         """
-        collect information about a test before it begins,
+        collect information about a ``test`` before it begins,
         and initialize a timer to record time taken.
         """
         self._timer = time()
@@ -84,7 +84,7 @@ class NoseDBReporterBase(Plugin):
     
     def addError(self, test, err, capt=None):
         """
-        sets the status of the test to either 'skipped' or 'error',
+        sets the status of the ``test`` to either 'skipped' or 'error',
         collects the trace and time taken to execute.
         """
         file_path, suite, case = test.address()
@@ -104,7 +104,7 @@ class NoseDBReporterBase(Plugin):
     
     def addFailure(self, test, err, capt=None, tb_info=None):
         """
-        sets the status of the test to 'fail',
+        sets the status of the ``test`` to 'fail',
         collects the trace and time taken to execute.
         """
         file_path, suite, case = test.address()
@@ -119,7 +119,7 @@ class NoseDBReporterBase(Plugin):
         
     def addSuccess(self, test, capt=None):
         """
-        sets the status of the test to 'pass',
+        sets the status of the ``test`` to 'pass',
         and sets the time taken to execute.
         """
         file_path, suite, case = test.address()

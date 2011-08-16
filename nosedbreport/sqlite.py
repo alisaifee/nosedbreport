@@ -10,7 +10,7 @@ __copyright__ = "Copyright 2011, ProjectGoth"
 class NoseSQLiteReporter(NoseDBReporterBase):
     """
     SQLLite Connector. Reports the results of each test run into the tables
-    *testcase*, *testsuite*,*testcaseexecution* and *testsuiteexecution*
+    ``testcase``, ``testsuite``,``testcaseexecution`` and ``testsuiteexecution``
     """
     name = "nosedbreport"
 
@@ -48,6 +48,9 @@ class NoseSQLiteReporter(NoseDBReporterBase):
         """
         helper method to execute a sqlite query and commit
         the result.
+        
+        :param query: the query to execute
+        :param args: variable length argument list used to format ``query``
         """
         # santize quotes.
         for k,v in args.items():
@@ -133,7 +136,7 @@ class NoseSQLiteReporter(NoseDBReporterBase):
   
     def startTest(self, test):
         """
-        record initiation of a test case. Update the last start time 
+        record initiation of a test case (``test``). Update the last start time 
         of the test suite &  test case.
         """
         if self.connection:

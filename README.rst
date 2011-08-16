@@ -1,5 +1,7 @@
+.. _bitbucket repository: http://hg.indydevs.org/nosedbreport
+
 Introduction
-------------
+============
 nosedbreport exposes a single plugin that can front various backend databases to store
 the result of a nose test execution. Having the results of your tests, whether they are part
 of a continuous integration system or not, allows you to ask interesting questions about
@@ -24,7 +26,7 @@ Installation
     
     sudo pip install nosedbreport
 
-* from source ::
+* from source (`bitbucket repository`_)::
 
     hg clone http://hg.indydevs.org/nosedbreport
     cd nosedbreport
@@ -37,11 +39,14 @@ Usage
  * The most basic use case is to report the results of a test run into a mysql database,
    which can be achieved by adding the following options to your nose execution::
 
-	nosetests --dbreport_dbtype=mysql --dbreport_host=your.mysql.com --dbreport_user=ali --dbreport_password=some-pass --dbreport_db=nosereport
+	nosetests --dbreport_dbtype=mysql --dbreport_host=your.mysql.com\
+	 --dbreport_user=ali --dbreport_password=some-pass --dbreport_db=nosereport
  
  * To create the appropriate schema in your mysql database::
 
-    nosetests --dbreport_dbtype=mysql --dbreport_host=your.mysql.com --dbreport_user=root  --dbreport_password=your-root-pass --dbreport_db=nosereport --dbreport_create_schema
+    nosetests --dbreport_dbtype=mysql --dbreport_host=your.mysql.com\
+     --dbreport_user=root  --dbreport_password=your-root-pass\
+     --dbreport_db=nosereport --dbreport_create_schema
 
 
 
