@@ -26,7 +26,7 @@ Installation
 
 * from source ::
 
-    hg clone http://hg.indydevs.org/ali/nosedbreport
+    hg clone http://hg.indydevs.org/nosedbreport
     cd nosedbreport
     python setup.py build
     sudo python setup.py install
