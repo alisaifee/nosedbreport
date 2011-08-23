@@ -16,6 +16,7 @@ setup(
         'nose.plugins.0.10': [
             'nosedbreport = nosedbreport:NoseDBReporter']
         },
+    install_requires = ['sphinx.ext.autodoc','sphinx.ext.inheritance_diagram', 'sphinx.ext.viewcode'],
     packages = ['nosedbreport'],
 )
 
