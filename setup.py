@@ -12,6 +12,8 @@ from setuptools import setup, find_packages
 setup(
     name='NoseDBResult',
     version='0.1',
+    description='Nose plugin for recording test results to a database',
+    long_description=open('README.rst').read(),
     entry_points = {
         'nose.plugins.0.10': [
             'nosedbreport = nosedbreport:NoseDBReporter']
