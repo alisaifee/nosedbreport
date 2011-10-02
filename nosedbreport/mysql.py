@@ -73,7 +73,8 @@ class NoseMySQLReporter(NoseDBReporterBase):
     
     def configure(self, options, conf):
         """
-        sets up the MySQL database connection
+        sets up the MySQL database connection based on the options
+        provided on the command line.
         """
         import MySQLdb
         try:
