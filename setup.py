@@ -11,6 +11,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='NoseDBResult',
+    author = __author__,
+    author_email = __email__,
+    license = "MIT",
     version='0.1',
     description='Nose plugin for recording test results to a database',
     long_description=open('README.rst').read(),
