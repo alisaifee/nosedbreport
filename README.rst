@@ -39,14 +39,14 @@ Usage
  * The most basic use case is to report the results of a test run into a mysql database,
    which can be achieved by adding the following options to your nose execution::
 
-	nosetests --dbreport_dbtype=mysql --dbreport_host=your.mysql.com\
-	 --dbreport_username=ali --dbreport_password=some-pass --dbreport_db=nosereport
+	nosetests --dbreport-dbtype=mysql --dbreport-host=your.mysql.com\
+	 --dbreport-username=ali --dbreport-password=some-pass --dbreport-db=nosereport
  
  * To create the appropriate schema in your mysql database::
 
-    nosetests --dbreport_dbtype=mysql --dbreport_host=your.mysql.com\
-     --dbreport_username=root  --dbreport_password=your-root-pass\
-     --dbreport_db=nosereport --dbreport_create_schema
+    nosetests --dbreport-dbtype=mysql --dbreport-host=your.mysql.com\
+     --dbreport-username=root  --dbreport-password=your-root-pass\
+     --dbreport-db=nosereport --dbreport-create-schema
 
 
 

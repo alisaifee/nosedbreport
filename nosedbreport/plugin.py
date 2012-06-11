@@ -33,13 +33,13 @@ class NoseDBReporter(Plugin):
         """
         Register commandline options
         """
-        parser.add_option("", "--dbreport_dbtype", dest="db_type", type="choice", choices=self.connectors.keys())
-        parser.add_option("", "--dbreport_host", default="localhost", dest="dbreport_host")
-        parser.add_option("", "--dbreport_port", dest="dbreport_port")
-        parser.add_option("", "--dbreport_username", default="nose", dest="dbreport_username")
-        parser.add_option("", "--dbreport_password", default="", dest="dbreport_password")
-        parser.add_option("", "--dbreport_db", default="nosereport", dest="dbreport_db")
-        parser.add_option("", "--dbreport_create_schema", action="store_true", dest="dbreport_create_schema")
+        parser.add_option("", "--dbreport-dbtype", dest="db_type", type="choice", choices=self.connectors.keys())
+        parser.add_option("", "--dbreport-host", default="localhost", dest="dbreport_host")
+        parser.add_option("", "--dbreport-port", dest="dbreport_port")
+        parser.add_option("", "--dbreport-username", default="nose", dest="dbreport_username")
+        parser.add_option("", "--dbreport-password", default="", dest="dbreport_password")
+        parser.add_option("", "--dbreport-db", default="nosereport", dest="dbreport_db")
+        parser.add_option("", "--dbreport-create-schema", action="store_true", dest="dbreport_create_schema")
     
     def __become(self, other):
         """

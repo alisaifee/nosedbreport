@@ -10,7 +10,7 @@ __copyright__ = "Copyright 2011, ProjectGoth"
 from setuptools import setup, find_packages
 
 setup(
-    name='NoseDBResult',
+    name='NoseDBReport',
     author = __author__,
     author_email = __email__,
     license = "MIT",
