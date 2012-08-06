@@ -227,11 +227,15 @@ class NoseMySQLReporter(NoseDBReporterBase):
             CONSTRAINT `fk_testsuite_name` FOREIGN KEY (`suite`) REFERENCES `testsuite` (`name`)
         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
         """ 
-        cursor = self.connection.cursor()
+        if self.connection:
+            cursor = self.connection.cursor()
         
-        if not cursor.execute("show tables like 'test%%'") == 4:
-            cursor.execute ( testsuite_schema )
-            cursor.execute ( testcase_schema )
-            cursor.execute ( testsuiteexecution_schema )
-            cursor.execute ( testcaseexecution_schema )
-
+            if not cursor.execute("show tables like 'test%%'") == 4:
+                cursor.execute ( testsuite_schema )
+                cursor.execute ( testcase_schema )
+                cursor.execute ( testsuiteexecution_schema )
+                cursor.execute ( testcaseexecution_schema )
+            return True
+        else:
+            self.logger.error("Unable to setup scheme due to mysql configuration error")
+            return False

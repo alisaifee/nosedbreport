@@ -65,8 +65,11 @@ class NoseDBReporter(Plugin):
                 self.__become(self.connectors[options.db_type])
                 self._other.configure(options, conf)
                 if options.dbreport_create_schema:
-                    self._other.construct_schema()
-                    raise SystemExit("schema generated.")
+                    message=""
+                    if self._other.construct_schema():
+                        message = "schema created"
+                    raise SystemExit(message)
+                
 
     
     def __getattr__(self, attr):

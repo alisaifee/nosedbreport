@@ -209,10 +209,14 @@ class NoseSQLiteReporter(NoseDBReporterBase):
            FOREIGN KEY(suite) REFERENCES testsuite(name) 
         )
         """ 
-        cursor = self.connection.cursor()
+        if self.connection:
+            cursor = self.connection.cursor()
         
-        cursor.execute ( testsuite_schema )
-        cursor.execute ( testcase_schema )
-        cursor.execute ( testsuiteexecution_schema )
-        cursor.execute ( testcaseexecution_schema )
-
+            cursor.execute ( testsuite_schema )
+            cursor.execute ( testcase_schema )
+            cursor.execute ( testsuiteexecution_schema )
+            cursor.execute ( testcaseexecution_schema )
+            return True
+        else:
+            self.logger.error("Unable to setup scheme due to mysql configuration error")
+            return False
