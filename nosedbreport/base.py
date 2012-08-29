@@ -57,7 +57,7 @@ class NoseDBReporterBase(Plugin):
         if full_doc:
             return "\n".join(k.strip() for k in full_doc.split("\n"))
         else:
-            return ""
+            return test.shortDescription()
  
   
     def startTest(self, test):
