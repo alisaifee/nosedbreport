@@ -14,7 +14,7 @@ setup(
     author = __author__,
     author_email = __email__,
     license = "MIT",
-    version='0.2',
+    version='0.2.1',
     url='http://hg.indydevs.org/nosedbreport',
     include_package_data = True,
     package_data = {
