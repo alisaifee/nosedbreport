@@ -132,7 +132,7 @@ class NoseMySQLReporter(NoseDBReporterBase):
 
                 run_update = { "testcase":case,
                                 "suite":results[case]["suite"],
-                                "suiteexecution":suiteexecids[suite],
+                                "suiteexecution":suiteexecids[results[case]["suite"]],
                                 "startTime":results[case]["lastStarted"],
                                 "timeTaken":results[case]["timeTaken"],
                                 "status":results[case]["status"],
