@@ -19,12 +19,12 @@ class NoseDBReporterBase(Plugin):
     """
     name = "nosedbreport"
     enabled = False
-    
+
     time_fmt = "%Y-%m-%d %H:%M:%S"
 
     @staticmethod
     def time_now():
-        return datetime.now().strftime(NoseDBReporterBase.time_fmt)
+        return datetime.utcnow().strftime(NoseDBReporterBase.time_fmt)
 
     def __init__(self):
         self.connection = None

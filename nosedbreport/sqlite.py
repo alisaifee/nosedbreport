@@ -82,7 +82,7 @@ class NoseSQLiteReporter(NoseDBReporterBase):
             self.logger.error ("The sqlite3 module is required for nosedbreporter to work with sqlite")
         except sqlite3.OperationalError, e:
             self.enabled = False
-            self.logger.error (e[1])
+            self.logger.error (e)
 
     def report(self, stream):
         """
@@ -209,6 +209,14 @@ class NoseSQLiteReporter(NoseDBReporterBase):
            FOREIGN KEY(suite) REFERENCES testsuite(name)
         )
         """
+        indices  = ["CREATE INDEX idx_name on testcase(name)",
+        "CREATE INDEX tc_idx_suite on testcase(suite)",
+        "CREATE INDEX ts_idx_name on testsuite(name)",
+        "CREATE INDEX tce_idx_status on testcaseexecution(status)",
+        "CREATE INDEX tce_idx_testcase on testcaseexecution(testcase)",
+        "CREATE INDEX tce_idx_suiteexecution on testcaseexecution(suiteexecution)",
+        "CREATE INDEX tse_idx_start on testsuiteexecution(startTime)",
+        "CREATE INDEX tse_idx_end on testsuiteexecution(endTime)"]
         if self.connection:
             cursor = self.connection.cursor()
 
@@ -216,6 +224,9 @@ class NoseSQLiteReporter(NoseDBReporterBase):
             cursor.execute ( testcase_schema )
             cursor.execute ( testsuiteexecution_schema )
             cursor.execute ( testcaseexecution_schema )
+            for index in indices:
+                cursor.execute ( index )
+
             return True
         else:
             self.logger.error("Unable to setup scheme due to mysql configuration error")
