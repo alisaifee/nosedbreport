@@ -1,7 +1,7 @@
-"""                                                                                                                                                                                                         
+"""
 setup.py for nosedbreport
- 
- 
+
+
 """
 __author__ = "Ali-Akber Saifee"
 __email__ = "ali@mig33global.com"
@@ -14,14 +14,14 @@ setup(
     author = __author__,
     author_email = __email__,
     license = "MIT",
-    version='0.2.3',
-    url='http://hg.indydevs.org/nosedbreport',
+    version='0.2.4',
+    url='http://github.com/alisaifee/nosedbreport',
     include_package_data = True,
     package_data = {
-            '':[ 'README' ],
+            '':[ 'README.rst' ],
          },
     description='Nose plugin for recording test results to a database',
-    long_description=open('README').read(),
+    long_description=open('README.rst').read(),
     entry_points = {
         'nose.plugins.0.10': [
             'nosedbreport = nosedbreport:NoseDBReporter']
