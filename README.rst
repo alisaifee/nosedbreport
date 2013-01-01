@@ -1,4 +1,4 @@
-.. _bitbucket repository: http://hg.indydevs.org/nosedbreport
+.. _git repository: http://github.com/alisaifee/nosedbreport
 
 Introduction
 ============
@@ -26,9 +26,9 @@ Installation
     
     sudo pip install nosedbreport
 
-* from source (`bitbucket repository`_)::
+* from source (`git repository`_)::
 
-    hg clone http://hg.indydevs.org/nosedbreport
+    hg clone http://github.com/alisaifee/nosedbreport
     cd nosedbreport
     python setup.py build
     sudo python setup.py install
