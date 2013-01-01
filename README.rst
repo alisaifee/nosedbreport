@@ -48,5 +48,5 @@ Usage
      --dbreport-username=root  --dbreport-password=your-root-pass\
      --dbreport-db=nosereport --dbreport-create-schema
 
- * For detailed usage refer to `read the docs`
+ * For detailed usage refer to `read the docs`_
 
