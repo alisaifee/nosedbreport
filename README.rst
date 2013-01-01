@@ -1,5 +1,5 @@
 .. _git repository: http://github.com/alisaifee/nosedbreport
-
+.. _read the docs: http://nosedbreport.readthedocs.org/en/latest/
 Introduction
 ============
 nosedbreport exposes a single plugin that can front various backend databases to store
@@ -48,5 +48,5 @@ Usage
      --dbreport-username=root  --dbreport-password=your-root-pass\
      --dbreport-db=nosereport --dbreport-create-schema
 
-
+ * For detailed usage refer to `read the docs`
 
