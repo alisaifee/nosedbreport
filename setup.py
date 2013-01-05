@@ -18,7 +18,7 @@ setup(
     url='http://github.com/alisaifee/nosedbreport',
     include_package_data = True,
     package_data = {
-            '':[ 'README.rst' ],
+            '':[ 'README.md' ],
          },
     description='Nose plugin for recording test results to a database',
     long_description=open('README.rst').read(),
