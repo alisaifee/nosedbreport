@@ -33,6 +33,8 @@ Installation
     python setup.py build
     sudo python setup.py install
 
+.. image:: https://api.travis-ci.org/alisaifee/nosedbreport.png
+   :alt: build status
 
 Usage
 =====
