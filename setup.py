@@ -14,7 +14,7 @@ setup(
     author = __author__,
     author_email = __email__,
     license = "MIT",
-    version='0.2.4',
+    version='0.2.5',
     url='http://github.com/alisaifee/nosedbreport',
     include_package_data = True,
     package_data = {
