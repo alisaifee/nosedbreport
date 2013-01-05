@@ -8,13 +8,13 @@ __email__ = "ali@mig33global.com"
 __copyright__ = "Copyright 2011, ProjectGoth"
 
 from setuptools import setup, find_packages
-
+import nosedbreport
 setup(
     name='nosedbreport',
     author = __author__,
     author_email = __email__,
     license = "MIT",
-    version='0.2.5',
+    version=nosedbreport.__version__,
     url='http://github.com/alisaifee/nosedbreport',
     include_package_data = True,
     package_data = {
