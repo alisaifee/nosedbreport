@@ -1,5 +1,6 @@
 .. _git repository: http://github.com/alisaifee/nosedbreport
 .. _read the docs: http://nosedbreport.readthedocs.org/en/latest/
+
 Introduction
 ============
 nosedbreport exposes a single plugin that can front various backend databases to store
@@ -33,8 +34,8 @@ Installation
     python setup.py build
     sudo python setup.py install
 
-.. image:: https://api.travis-ci.org/alisaifee/nosedbreport.png
-   :alt: build status
+.. image:: https://secure.travis-ci.org/alisaifee/nosedbreport.png?branch=master
+    :target: https://travis-ci.org/#!/alisaifee/nosedbreport
 
 Usage
 =====
