@@ -15,7 +15,7 @@ setup(
     author_email = __email__,
     license = "MIT",
     version=nosedbreport.__version__,
-    url='http://github.com/alisaifee/nosedbreport',
+    url='http://github.com/mig33/nosedbreport',
     include_package_data = True,
     package_data = {
             '':[ 'README.rst' ],

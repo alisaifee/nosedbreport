@@ -1,4 +1,4 @@
-.. _git repository: http://github.com/alisaifee/nosedbreport
+.. _git repository: http://github.com/mig33/nosedbreport
 .. _read the docs: http://nosedbreport.readthedocs.org/en/latest/
 
 Introduction
@@ -29,13 +29,13 @@ Installation
 
 * from source (`git repository`_)::
 
-    hg clone http://github.com/alisaifee/nosedbreport
+    hg clone http://github.com/mig33/nosedbreport
     cd nosedbreport
     python setup.py build
     sudo python setup.py install
 
-.. image:: https://secure.travis-ci.org/alisaifee/nosedbreport.png?branch=master
-    :target: https://travis-ci.org/#!/alisaifee/nosedbreport
+.. image:: https://secure.travis-ci.org/mig33/nosedbreport.png?branch=master
+    :target: https://travis-ci.org/#!/mig33/nosedbreport
 
 Usage
 =====
