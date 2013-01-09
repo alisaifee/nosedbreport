@@ -39,8 +39,8 @@ Installation
 
 Usage
 =====
-* The most basic use case is to report the results of a test run into a mysql database,
-   which can be achieved by adding the following options to your nose execution::
+
+* The most basic use case is to report the results of a test run into a mysql database, which can be achieved by adding the following options to your nose execution::
 
 	nosetests --dbreport-dbtype=mysql --dbreport-host=your.mysql.com\
 	 --dbreport-username=ali --dbreport-password=some-pass --dbreport-db=nosereport
