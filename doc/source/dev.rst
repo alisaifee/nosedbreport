@@ -2,7 +2,7 @@ Development
 ===========
 Contributing
 ------------
-.. _bitbucket repository: http://hg.indydevs.org/nosedbreport
+.. _bitbucket repository: http://github.com/mig33.nosedbreport 
 
 The source is maintained in a `bitbucket repository`_. Feel free to fork it to modify/extend the plugin.
 Currently, the plugin is only backed by a MySQL & SQLite connector, but it can be easily extended to support other databases.

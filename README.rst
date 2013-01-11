@@ -1,5 +1,7 @@
 .. _git repository: http://github.com/mig33/nosedbreport
 .. _read the docs: http://nosedbreport.readthedocs.org/en/latest/
+.. |travis-ci| image:: https://secure.travis-ci.org/mig33/nosedbreport.png 
+    :target: https://travis-ci.org/#!/mig33/nosedbreport 
 
 Introduction
 ============
@@ -17,8 +19,8 @@ These questions also allow you to build reporting, and monitoring tools based on
 functional tests that you may be running against your development, staging or production
 systems, such as heartbeat or availability pages.
 
-Installation
-============
+Installation |travis-ci|
+=======================
 * with easy_install ::
    
     sudo easy_install nosedbreport
@@ -33,9 +35,6 @@ Installation
     cd nosedbreport
     python setup.py build
     sudo python setup.py install
-
-.. image:: https://secure.travis-ci.org/mig33/nosedbreport.png?branch=master
-    :target: https://travis-ci.org/#!/mig33/nosedbreport
 
 Usage
 =====
