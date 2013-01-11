@@ -20,7 +20,7 @@ functional tests that you may be running against your development, staging or pr
 systems, such as heartbeat or availability pages.
 
 Installation |travis-ci|
-=======================
+========================
 * with easy_install ::
    
     sudo easy_install nosedbreport
