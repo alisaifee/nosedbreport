@@ -88,18 +88,18 @@ class NoseDBReporterBase(Plugin):
         collects the trace and time taken to execute.
         """
         file_path, suite, case = test.address()
+        id = test.id()
         if issubclass(err[0], SkipTest):
             self.test_case_results[id]["status"] = "skipped"
             self.test_case_results[id]["timeTaken"] = 0
         else:
             taken = time() - self._timer
             tb = ''.join(traceback.format_exception(*err))
-            id = test.id()
             if self.test_case_results.has_key(id):
                 self.test_case_results[id]["traceback"] = tb
                 self.test_case_results[id]["timeTaken"] = taken
                 self.test_case_results[id]["status"] = "error"
-                self.test_suites[suite]["lastCompleted"] = NoseDBReporterBase.time_now()
+        self.test_suites[suite]["lastCompleted"] = NoseDBReporterBase.time_now()
 
     
     def addFailure(self, test, err, capt=None, tb_info=None):
