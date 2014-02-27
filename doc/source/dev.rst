@@ -2,9 +2,9 @@ Development
 ===========
 Contributing
 ------------
-.. _bitbucket repository: http://github.com/alisaifee/nosedbreport 
+.. _github repository: http://github.com/alisaifee/nosedbreport
 
-The source is maintained in a `bitbucket repository`_. Feel free to fork it to modify/extend the plugin.
+The source is maintained in a `github repository`_. Feel free to fork it to modify/extend the plugin.
 Currently, the plugin is only backed by a MySQL & SQLite connector, but it can be easily extended to support other databases.
 
 To add a new database connector, you will need to:
