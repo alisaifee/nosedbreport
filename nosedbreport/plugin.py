@@ -5,8 +5,8 @@ import mysql
 import sqlite
 
 __author__ = "Ali-Akber Saifee"
-__email__ = "ali@mig33global.com"
-__copyright__ = "Copyright 2011, ProjectGoth"
+__email__ = "ali@indydevs.org"
+__copyright__ = "Copyright 2014, Ali-Akber Saifee"
 
 
 class NoseDBReporter(Plugin):
