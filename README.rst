@@ -3,6 +3,10 @@
 .. |travis-ci| image:: https://secure.travis-ci.org/alisaifee/nosedbreport.png 
     :target: https://travis-ci.org/#!/alisaifee/nosedbreport 
 
+**ADOPT ME: The author of this project is unable to continue maintaining it 
+and is looking for volunteers to adopt it. Please email me at ali@indydevs.org
+if you feel you could give this project a new home**
+
 Introduction
 ============
 nosedbreport exposes a single plugin that can front various backend databases to store
